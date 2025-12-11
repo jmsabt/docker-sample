@@ -1,10 +1,12 @@
 // Configuration
-const API_KEY = "e08aa8b63603da21c838f1959cb4a43a"; // Replace with your OpenWeatherMap API key
+const API_KEY = "e08aa8b63603da21c838f1959cb4a43a";
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
+const FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
 // Initialize - Load Manila weather on startup
 window.addEventListener("load", () => {
   loadManilaWeather();
+  loadManilaForecast();
 });
 
 // Load Manila weather
@@ -12,11 +14,6 @@ async function loadManilaWeather() {
   const city = "Manila";
   const weatherDisplay = document.getElementById("weatherDisplay");
   const errorMessage = document.getElementById("errorMessage");
-
-  if (API_KEY === "e08aa8b63603da21c838f1959cb4a43a") {
-    showError("Please add your OpenWeatherMap API key in app.js");
-    return;
-  }
 
   errorMessage.textContent = "";
 
@@ -75,7 +72,7 @@ function displayWeather(data) {
 // Change background based on weather condition
 function changeBackground(condition) {
   const body = document.body;
-  body.className = ""; // Remove all classes
+  body.className = "";
 
   const weatherClasses = {
     clear: "clear",
@@ -91,4 +88,72 @@ function changeBackground(condition) {
 
   const weatherClass = weatherClasses[condition] || "clear";
   body.classList.add(weatherClass);
+}
+
+// Load Manila 5-day forecast
+async function loadManilaForecast() {
+  const city = "Manila";
+  const forecastContainer = document.getElementById("forecastContainer");
+
+  try {
+    const url = `${FORECAST_URL}?q=${city},PH&appid=${API_KEY}&units=metric`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch forecast data");
+    }
+
+    const data = await response.json();
+    displayForecast(data);
+  } catch (error) {
+    console.error("Forecast error:", error);
+    forecastContainer.innerHTML =
+      '<p class="forecast-error">Unable to load forecast</p>';
+  }
+}
+
+// Display 5-day forecast
+function displayForecast(data) {
+  const forecastContainer = document.getElementById("forecastContainer");
+
+  // Group forecasts by day (API returns 3-hour intervals)
+  const dailyForecasts = {};
+
+  data.list.forEach((item) => {
+    const date = new Date(item.dt * 1000);
+    const day = date.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+
+    // Take midday forecast (12:00) or first available
+    if (!dailyForecasts[day] || date.getHours() === 12) {
+      dailyForecasts[day] = {
+        temp: Math.round(item.main.temp),
+        icon: item.weather[0].icon,
+        description: item.weather[0].description,
+        date: date,
+      };
+    }
+  });
+
+  // Convert to array and take first 5 days
+  const forecastArray = Object.entries(dailyForecasts)
+    .slice(0, 5)
+    .map(([day, data]) => ({ day, ...data }));
+
+  // Generate HTML
+  forecastContainer.innerHTML = forecastArray
+    .map(
+      (forecast) => `
+    <div class="forecast-card">
+      <div class="forecast-day">${forecast.day}</div>
+      <img src="https://openweathermap.org/img/wn/${forecast.icon}.png" alt="${forecast.description}" class="forecast-icon">
+      <div class="forecast-temp">${forecast.temp}°C</div>
+      <div class="forecast-desc">${forecast.description}</div>
+    </div>
+  `
+    )
+    .join("");
 }

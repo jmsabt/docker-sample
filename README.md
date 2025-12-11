@@ -77,6 +77,7 @@ docker exec -it weather-app sh
 ## ✨ Features
 
 - Real-time Manila weather
+- **5-day weather forecast**
 - Dynamic background based on weather conditions
 - Responsive design
 - Lightweight (~50MB Docker image)
