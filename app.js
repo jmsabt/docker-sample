@@ -1,5 +1,7 @@
+require("dotenv").config();
+
 // Configuration
-const API_KEY = "e08aa8b63603da21c838f1959cb4a43a";
+const API_KEY = process.env.API_KEY;
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 const FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
