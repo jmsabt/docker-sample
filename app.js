@@ -2,73 +2,39 @@
 const API_KEY = "e08aa8b63603da21c838f1959cb4a43a"; // Replace with your OpenWeatherMap API key
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
-// State
-let currentCity = "";
-let favorites = [];
-
 // DOM Elements
-const cityInput = document.getElementById("cityInput");
-const searchBtn = document.getElementById("searchBtn");
 const weatherDisplay = document.getElementById("weatherDisplay");
 const errorMessage = document.getElementById("errorMessage");
-const favoriteBtn = document.getElementById("favoriteBtn");
-const favoritesList = document.getElementById("favoritesList");
 
-// Event listeners
-searchBtn.addEventListener("click", searchWeather);
-cityInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") searchWeather();
-});
-favoriteBtn.addEventListener("click", toggleFavorite);
-
-// Initialize
-loadFavoritesFromStorage();
-renderFavorites();
-
-// Load default city on startup
+// Initialize - Load Manila weather on startup
 window.addEventListener("load", () => {
-  cityInput.value = "Manila";
-  searchWeather();
+  loadManilaWeather();
 });
 
-// Search for weather
-async function searchWeather() {
-  const city = cityInput.value.trim();
+// Load Manila weather
+async function loadManilaWeather() {
+  const city = "Manila";
 
-  if (!city) {
-    showError("Please enter a city name");
-    return;
-  }
-
-  if (API_KEY === "YOUR_API_KEY_HERE") {
+  if (API_KEY === "e08aa8b63603da21c838f1959cb4a43a") {
     showError("Please add your OpenWeatherMap API key in app.js");
     return;
   }
 
   showError("");
-  searchBtn.textContent = "Loading...";
-  searchBtn.disabled = true;
 
   try {
-    const url = `${API_URL}?q=${encodeURIComponent(
-      city
-    )}&appid=${API_KEY}&units=metric`;
+    const url = `${API_URL}?q=${city},PH&appid=${API_KEY}&units=metric`;
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new Error("City not found");
+      throw new Error("Failed to fetch weather data");
     }
 
     const data = await response.json();
-    currentCity = data.name;
     displayWeather(data);
-    updateFavoriteButton();
   } catch (error) {
     showError(error.message || "Failed to fetch weather data");
     weatherDisplay.classList.add("hidden");
-  } finally {
-    searchBtn.textContent = "Search";
-    searchBtn.disabled = false;
   }
 }
 
@@ -130,74 +96,4 @@ function changeBackground(condition) {
 // Show error message
 function showError(message) {
   errorMessage.textContent = message;
-}
-
-// Load favorites from memory
-function loadFavoritesFromStorage() {
-  favorites = [];
-}
-
-// Render favorites list
-function renderFavorites() {
-  if (favorites.length === 0) {
-    favoritesList.innerHTML =
-      '<p class="no-favorites">No favorites yet. Add some cities!</p>';
-    return;
-  }
-
-  favoritesList.innerHTML = favorites
-    .map(
-      (city) => `
-        <div class="favorite-tag">
-            <span onclick="loadCityWeather('${city}')">${city}</span>
-            <span class="remove-favorite" onclick="removeFavorite('${city}')">×</span>
-        </div>
-    `
-    )
-    .join("");
-}
-
-// Toggle favorite
-function toggleFavorite() {
-  if (!currentCity) return;
-
-  const index = favorites.indexOf(currentCity);
-
-  if (index > -1) {
-    favorites.splice(index, 1);
-  } else {
-    favorites.push(currentCity);
-  }
-
-  renderFavorites();
-  updateFavoriteButton();
-}
-
-// Update favorite button
-function updateFavoriteButton() {
-  const isFavorite = favorites.includes(currentCity);
-  favoriteBtn.textContent = isFavorite
-    ? "⭐ Remove from Favorites"
-    : "⭐ Add to Favorites";
-  favoriteBtn.classList.toggle("is-favorite", isFavorite);
-}
-
-// Load weather for a favorite city
-function loadCityWeather(city) {
-  cityInput.value = city;
-  searchWeather();
-}
-
-// Remove favorite
-function removeFavorite(city) {
-  const index = favorites.indexOf(city);
-  if (index > -1) {
-    favorites.splice(index, 1);
-  }
-
-  renderFavorites();
-
-  if (currentCity === city) {
-    updateFavoriteButton();
-  }
 }

@@ -3,27 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Docker Weather App</title>
+    <title>Manila Weather - Docker App</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body class="clear">
     <div class="container">
       <header>
-        <h1>🌤️ Weather App</h1>
+        <h1>🌤️ Manila Weather</h1>
         <p class="subtitle">Powered by Docker 🐳</p>
       </header>
 
-      <div class="search-section">
-        <div class="search-box">
-          <input
-            type="text"
-            id="cityInput"
-            placeholder="Enter city name (e.g., Manila, Tokyo, London)..."
-          />
-          <button id="searchBtn">Search</button>
-        </div>
-        <div id="errorMessage" class="error-message"></div>
-      </div>
+      <div id="errorMessage" class="error-message"></div>
 
       <div id="weatherDisplay" class="weather-display hidden">
         <div class="weather-main">
@@ -54,17 +44,6 @@
             <span class="detail-label">Wind Speed</span>
             <span id="windSpeed" class="detail-value">- km/h</span>
           </div>
-        </div>
-
-        <button id="favoriteBtn" class="favorite-btn">
-          ⭐ Add to Favorites
-        </button>
-      </div>
-
-      <div class="favorites-section">
-        <h3>Favorite Cities</h3>
-        <div id="favoritesList" class="favorites-list">
-          <p class="no-favorites">No favorites yet. Add some cities!</p>
         </div>
       </div>
 

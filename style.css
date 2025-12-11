@@ -67,48 +67,6 @@ header h1 {
   font-size: 0.9em;
 }
 
-.search-section {
-  margin-bottom: 30px;
-}
-
-.search-box {
-  display: flex;
-  gap: 10px;
-}
-
-#cityInput {
-  flex: 1;
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 10px;
-  font-size: 1em;
-  transition: border-color 0.3s;
-}
-
-#cityInput:focus {
-  outline: none;
-  border-color: #4b79a1;
-}
-
-#searchBtn {
-  padding: 15px 30px;
-  background: #4b79a1;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-#searchBtn:hover {
-  background: #3a5f7d;
-}
-
-#searchBtn:active {
-  transform: scale(0.98);
-}
-
 .error-message {
   color: #d32f2f;
   margin-top: 10px;
@@ -183,83 +141,6 @@ header h1 {
   color: #333;
 }
 
-.favorite-btn {
-  padding: 12px 30px;
-  background: #fdb813;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1em;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-top: 20px;
-}
-
-.favorite-btn:hover {
-  background: #e5a511;
-  transform: scale(1.05);
-}
-
-.favorite-btn:active {
-  transform: scale(0.98);
-}
-
-.favorite-btn.is-favorite {
-  background: #4caf50;
-}
-
-.favorites-section {
-  margin-top: 30px;
-}
-
-.favorites-section h3 {
-  font-size: 1.3em;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.favorites-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.no-favorites {
-  color: #999;
-  font-style: italic;
-}
-
-.favorite-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 15px;
-  background: #f0f0f0;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.favorite-tag:hover {
-  background: #4b79a1;
-  color: white;
-}
-
-.favorite-tag span:first-child {
-  user-select: none;
-}
-
-.remove-favorite {
-  cursor: pointer;
-  font-size: 1.2em;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.remove-favorite:hover {
-  opacity: 1;
-}
-
 footer {
   text-align: center;
   margin-top: 30px;
@@ -290,9 +171,5 @@ footer {
 
   .weather-details {
     grid-template-columns: 1fr;
-  }
-
-  .search-box {
-    flex-direction: column;
   }
 }
