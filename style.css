@@ -1,0 +1,298 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  transition: background 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Weather-based backgrounds */
+body.clear {
+  background: linear-gradient(135deg, #fdb813 0%, #ff6b35 100%);
+}
+
+body.clouds {
+  background: linear-gradient(135deg, #757f9a 0%, #d7dde8 100%);
+}
+
+body.rain,
+body.drizzle {
+  background: linear-gradient(135deg, #283e51 0%, #4b79a1 100%);
+}
+
+body.thunderstorm {
+  background: linear-gradient(135deg, #232526 0%, #414345 100%);
+}
+
+body.snow {
+  background: linear-gradient(135deg, #e6dada 0%, #274046 100%);
+}
+
+body.mist,
+body.fog,
+body.haze {
+  background: linear-gradient(135deg, #606c88 0%, #3f4c6b 100%);
+}
+
+.container {
+  max-width: 600px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.search-section {
+  margin-bottom: 30px;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+}
+
+#cityInput {
+  flex: 1;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+#cityInput:focus {
+  outline: none;
+  border-color: #4b79a1;
+}
+
+#searchBtn {
+  padding: 15px 30px;
+  background: #4b79a1;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#searchBtn:hover {
+  background: #3a5f7d;
+}
+
+#searchBtn:active {
+  transform: scale(0.98);
+}
+
+.error-message {
+  color: #d32f2f;
+  margin-top: 10px;
+  font-size: 0.9em;
+  min-height: 20px;
+}
+
+.weather-display {
+  text-align: center;
+  padding: 30px 0;
+  border-top: 2px solid #eee;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 30px;
+}
+
+.weather-display.hidden {
+  display: none;
+}
+
+.weather-main h2 {
+  font-size: 2em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.temperature {
+  font-size: 4em;
+  font-weight: bold;
+  color: #333;
+  margin: 20px 0;
+}
+
+.temp-unit {
+  font-size: 0.6em;
+  color: #666;
+}
+
+.description {
+  font-size: 1.5em;
+  color: #666;
+  text-transform: capitalize;
+  margin-bottom: 20px;
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-label {
+  font-size: 0.9em;
+  color: #999;
+}
+
+.detail-value {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #333;
+}
+
+.favorite-btn {
+  padding: 12px 30px;
+  background: #fdb813;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 20px;
+}
+
+.favorite-btn:hover {
+  background: #e5a511;
+  transform: scale(1.05);
+}
+
+.favorite-btn:active {
+  transform: scale(0.98);
+}
+
+.favorite-btn.is-favorite {
+  background: #4caf50;
+}
+
+.favorites-section {
+  margin-top: 30px;
+}
+
+.favorites-section h3 {
+  font-size: 1.3em;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.favorites-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.no-favorites {
+  color: #999;
+  font-style: italic;
+}
+
+.favorite-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  background: #f0f0f0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.favorite-tag:hover {
+  background: #4b79a1;
+  color: white;
+}
+
+.favorite-tag span:first-child {
+  user-select: none;
+}
+
+.remove-favorite {
+  cursor: pointer;
+  font-size: 1.2em;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+}
+
+.remove-favorite:hover {
+  opacity: 1;
+}
+
+footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+  color: #999;
+  font-size: 0.9em;
+}
+
+.docker-info {
+  margin-top: 5px;
+  font-size: 0.85em;
+  color: #4b79a1;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  header h1 {
+    font-size: 2em;
+  }
+
+  .temperature {
+    font-size: 3em;
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+}
