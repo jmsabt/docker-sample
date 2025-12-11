@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Docker Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="clear">
+    <div class="container">
+      <header>
+        <h1>🌤️ Weather App</h1>
+        <p class="subtitle">Powered by Docker 🐳</p>
+      </header>
+
+      <div class="search-section">
+        <div class="search-box">
+          <input
+            type="text"
+            id="cityInput"
+            placeholder="Enter city name (e.g., Manila, Tokyo, London)..."
+          />
+          <button id="searchBtn">Search</button>
+        </div>
+        <div id="errorMessage" class="error-message"></div>
+      </div>
+
+      <div id="weatherDisplay" class="weather-display hidden">
+        <div class="weather-main">
+          <h2 id="cityName">-</h2>
+          <div class="temperature">
+            <span id="temp" class="temp-value">-</span>
+            <span class="temp-unit">°C</span>
+          </div>
+          <p id="description" class="description">-</p>
+          <img
+            id="weatherIcon"
+            src=""
+            alt="Weather icon"
+            class="weather-icon"
+          />
+        </div>
+
+        <div class="weather-details">
+          <div class="detail-item">
+            <span class="detail-label">Feels Like</span>
+            <span id="feelsLike" class="detail-value">-°C</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Humidity</span>
+            <span id="humidity" class="detail-value">-%</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Wind Speed</span>
+            <span id="windSpeed" class="detail-value">- km/h</span>
+          </div>
+        </div>
+
+        <button id="favoriteBtn" class="favorite-btn">
+          ⭐ Add to Favorites
+        </button>
+      </div>
+
+      <div class="favorites-section">
+        <h3>Favorite Cities</h3>
+        <div id="favoritesList" class="favorites-list">
+          <p class="no-favorites">No favorites yet. Add some cities!</p>
+        </div>
+      </div>
+
+      <footer>
+        <p>Built with Docker 🐳 | Data from OpenWeatherMap</p>
+        <p class="docker-info">Running in containerized environment</p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
