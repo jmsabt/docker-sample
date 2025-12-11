@@ -9,13 +9,16 @@ services:
     ports:
       - "8080:80"
 
-    # Load environment variables from .env
     env_file:
       - .env
-
-    # Explicitly expose variables you want inside the container
     environment:
       API_KEY: ${API_KEY}
+
+    # Bind mount your local folder into nginx html directory
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html
+      - ./style.css:/usr/share/nginx/html/style.css
+      - ./app.js:/usr/share/nginx/html/app.js
 
     restart: unless-stopped
     container_name: weather-app
