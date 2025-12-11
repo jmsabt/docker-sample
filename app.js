@@ -2,10 +2,6 @@
 const API_KEY = "e08aa8b63603da21c838f1959cb4a43a"; // Replace with your OpenWeatherMap API key
 const API_URL = "https://api.openweathermap.org/data/2.5/weather";
 
-// DOM Elements
-const weatherDisplay = document.getElementById("weatherDisplay");
-const errorMessage = document.getElementById("errorMessage");
-
 // Initialize - Load Manila weather on startup
 window.addEventListener("load", () => {
   loadManilaWeather();
@@ -14,13 +10,15 @@ window.addEventListener("load", () => {
 // Load Manila weather
 async function loadManilaWeather() {
   const city = "Manila";
+  const weatherDisplay = document.getElementById("weatherDisplay");
+  const errorMessage = document.getElementById("errorMessage");
 
   if (API_KEY === "e08aa8b63603da21c838f1959cb4a43a") {
     showError("Please add your OpenWeatherMap API key in app.js");
     return;
   }
 
-  showError("");
+  errorMessage.textContent = "";
 
   try {
     const url = `${API_URL}?q=${city},PH&appid=${API_KEY}&units=metric`;
@@ -33,13 +31,15 @@ async function loadManilaWeather() {
     const data = await response.json();
     displayWeather(data);
   } catch (error) {
-    showError(error.message || "Failed to fetch weather data");
+    errorMessage.textContent = error.message || "Failed to fetch weather data";
     weatherDisplay.classList.add("hidden");
   }
 }
 
 // Display weather data
 function displayWeather(data) {
+  const weatherDisplay = document.getElementById("weatherDisplay");
+
   const weather = {
     city: data.name,
     country: data.sys.country,
@@ -91,9 +91,4 @@ function changeBackground(condition) {
 
   const weatherClass = weatherClasses[condition] || "clear";
   body.classList.add(weatherClass);
-}
-
-// Show error message
-function showError(message) {
-  errorMessage.textContent = message;
 }
